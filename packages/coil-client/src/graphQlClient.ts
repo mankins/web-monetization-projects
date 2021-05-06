@@ -9,7 +9,8 @@ import {
   refreshBtpToken,
   whoAmI,
   featureEnabled,
-  initiateTip
+  initiateTip,
+  minTipLimit
 } from './queries'
 
 // Reference class for DI/reduct
@@ -39,6 +40,7 @@ export class GraphQlClient {
   public adaptedPage = adaptedPage
   public featureEnabled = featureEnabled
   public initiateTip = initiateTip
+  public minTipLimit = minTipLimit
 
   public constructor(
     @inject(GraphQlClientOptions)
@@ -74,7 +76,7 @@ export class GraphQlClient {
         : serialized
       this.config.log('Domain:', this.config.coilDomain, 'Url:', redacted)
     }
-    const res = await this.fetch(`${this.config.coilDomain}/graphql`, init)
+    const res = await this.fetch(`${this.config.coilDomain}/gateway`, init)
     if (!res.ok) {
       throw new Error(
         `graphql query failed. status=${res.status} query=\`${query}\``
